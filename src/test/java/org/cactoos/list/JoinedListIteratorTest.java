@@ -23,10 +23,13 @@
  */
 package org.cactoos.list;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 import org.cactoos.iterable.IterableOf;
 import org.hamcrest.core.IsEqual;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
@@ -121,5 +124,14 @@ final class JoinedListIteratorTest {
             ),
             new IsEqual<>(new IterableOf<>(1, 2, 3, 0))
         ).affirm();
+    }
+
+    @Test
+    void testPreviousIndex(){
+        ArrayList<Integer> arrayList=new ArrayList<>(Arrays.asList(1,2,3));
+        ListIterator<Integer> listIterator=new JoinedListIterator<Integer>(arrayList.listIterator());
+
+        Assertions.assertTrue(listIterator.previousIndex()==-1,"Return value must be -1 for previous index of starting index");
+
     }
 }

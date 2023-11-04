@@ -24,9 +24,13 @@
 package org.cactoos.list;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.llorllale.cactoos.matchers.Assertion;
 import org.llorllale.cactoos.matchers.Throws;
 
@@ -140,5 +144,44 @@ final class NoNullsTest {
                 IllegalStateException.class
             )
         ).affirm();
+    }
+
+    @Test
+    void testAddAll(){
+
+        //creating list 1
+        List<Integer> numList1=new ArrayList<>(Arrays.asList(1,2,3));
+        NoNulls<Integer> noNullList1=new NoNulls<>(numList1);
+
+        //creating list 2
+        List<Integer> numList2=new ArrayList<>(Arrays.asList(4,5,6));
+        NoNulls<Integer> noNullList2=new NoNulls<>(numList2);
+
+        //creating result array to compare
+        List<Integer> noNullsList3=new ArrayList<>(Arrays.asList(1,2,3,4,5,6));
+
+        //testing addAll method
+        noNullList1.addAll(noNullList2);
+
+        Assertions.assertArrayEquals(noNullsList3.toArray(), noNullList1.toArray());
+
+
+    }
+
+    @Test()
+    void testLastIndexOf(){
+
+        // creating new list
+        List<Integer> numList1=new ArrayList<>(Arrays.asList(1,2,3));
+        NoNulls<Integer> noNullList1=new NoNulls<>(numList1);
+
+        Assertions.assertThrows(IllegalArgumentException.class, new Executable() {
+            @Override
+            public void execute() throws Throwable {
+                noNullList1.lastIndexOf(null);
+            }
+        },"Method fails when provided with null value");
+
+
     }
 }
